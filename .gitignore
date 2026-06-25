@@ -1,0 +1,22 @@
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+*.db
+*.sqlite3
+
+# Flask
+instance/
+
+# Environment variables
+.env
+
+# VS Code
+.vscode/
+
+# Vue / Node
+node_modules/
+dist/
+
+# Logs
+*.log
