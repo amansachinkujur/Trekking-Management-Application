@@ -47,9 +47,16 @@ class Trek(db.Model):
 
     available_slots = db.Column(db.Integer, nullable=False)
 
-    # Will be converted to a ForeignKey in the next step
-    assigned_staff_id = db.Column(db.Integer)
-
+   
+    assigned_staff_id = db.Column(
+    db.Integer,
+    db.ForeignKey("users.id"),
+    nullable=True
+                    )
+    staff = db.relationship(
+    "User",
+    foreign_keys=[assigned_staff_id]
+)
     status = db.Column(db.String(20), nullable=False)
 
     start_date = db.Column(db.Date, nullable=False)
