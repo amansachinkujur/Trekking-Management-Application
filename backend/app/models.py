@@ -93,17 +93,3 @@ class Booking(db.Model):
     payment_status = db.Column(db.String(20))
 
 
-class StaffProfile(db.Model):
-    __tablename__ = "staff_profiles"
-
-    id = db.Column(db.Integer, primary_key=True)
-
-    user_id = db.Column(
-        db.Integer,
-        db.ForeignKey("users.id"),
-        nullable=False
-    )
-
-    contact_details = db.Column(db.String(200))
-
-    status = db.Column(db.String(20), nullable=False)

@@ -17,7 +17,7 @@ db = SQLAlchemy()
 jwt = JWTManager()
 mail = Mail()
 cache = Cache()
-from app.models import User, Trek, Booking, StaffProfile
+from app.models import User, Trek, Booking
 from app import cache
 
 def create_app():
