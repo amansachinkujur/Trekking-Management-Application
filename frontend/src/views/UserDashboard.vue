@@ -1,11 +1,13 @@
 <template>
 
+<!-- User dashboard content -->
 <div class="container mt-5">
 
     <h2 class="mb-4">
         Available Treks
     </h2>
 
+    <!-- Page actions -->
     <button
         class="btn btn-primary mb-3"
         @click="loadTreks"
@@ -31,6 +33,7 @@
 >
     My Profile
 </button>
+    <!-- Filter section -->
     <div class="row mb-4">
 
         <div class="col-md-6">
@@ -117,6 +120,7 @@
 
     </div>
 
+    <!-- Available treks table -->
     <table class="table table-bordered table-striped">
 
         <thead>
@@ -191,10 +195,12 @@
 
 <script setup>
 
+// Vue imports and API config
 import { ref, computed, onMounted } from "vue"
 import { useRouter } from "vue-router"
 import { API_URL } from "../config"
 
+// Router and trek state
 const router = useRouter()
 
 const treks = ref([])
@@ -207,6 +213,7 @@ const durationFilter = ref("")
 const locationFilter = ref("")
 
 
+// Filter treks by search and selected criteria
 const filteredTreks = computed(() => {
 
     return treks.value.filter(trek => {
@@ -251,6 +258,7 @@ const filteredTreks = computed(() => {
 
 })
 
+// Load treks from API
 async function loadTreks() {
 
     const token = localStorage.getItem("token")
@@ -280,6 +288,7 @@ async function loadTreks() {
 
 }
 
+// Book a selected trek
 async function bookTrek(trekId) {
 
     const token = localStorage.getItem("token")
@@ -320,6 +329,8 @@ async function bookTrek(trekId) {
     }
 
 }
+
+// Clear session and return to login
 function logout(){
 
     localStorage.clear()
@@ -329,6 +340,7 @@ function logout(){
 }
 
 
+// Load treks on page mount
 onMounted(() => {
 
     loadTreks()

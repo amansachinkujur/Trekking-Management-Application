@@ -1,10 +1,13 @@
 <template>
 
+<!-- My bookings page -->
 <div class="container mt-5">
 
     <h2 class="mb-4">
         My Bookings
     </h2>
+
+    <!-- Refresh booking list -->
 
     <button
         class="btn btn-primary mb-3"
@@ -13,12 +16,16 @@
         Refresh Bookings
     </button>
 
+    <!-- Export booking history -->
+
     <button
             class="btn btn-success mb-3 ms-2"
             @click="exportBookings"
         >
             Export Booking History
         </button>
+
+    <!-- Booking table -->
 
     <table class="table table-bordered table-striped">
 
@@ -87,11 +94,14 @@
 
 <script setup>
 
+// Vue imports and API config
 import { ref, onMounted } from "vue"
 import { API_URL } from "../config"
 
+// Booking data
 const bookings = ref([])
 
+// Load bookings from API
 async function loadBookings() {
 
     const token = localStorage.getItem("token")
@@ -121,6 +131,7 @@ async function loadBookings() {
 
 }
 
+// Cancel a booking
 async function cancelBooking(bookingId) {
 
     if (!confirm("Are you sure you want to cancel this booking?")) {
@@ -166,6 +177,7 @@ async function cancelBooking(bookingId) {
 
 }
 
+// Export booking history
 async function exportBookings() {
 
     const token = localStorage.getItem("token")
@@ -196,6 +208,7 @@ async function exportBookings() {
 
 
 
+// Load bookings on page start
 onMounted(() => {
 
     loadBookings()

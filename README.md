@@ -78,7 +78,7 @@ Users can export their booking history as a CSV file, which is generated asynchr
 
 ### Background Processing
 - Celery
-- Redis-compatible server (Memurai)
+- Redis-compatible server 
 
 ---
 

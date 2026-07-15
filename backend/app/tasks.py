@@ -7,6 +7,8 @@ from sqlalchemy import func
 import csv
 import os
 
+
+# Daily reminder task
 @celery.task
 def send_daily_reminders():
 
@@ -56,9 +58,7 @@ Happy Trekking!
         print(f"Email sent to {booking.user.email}")
 
     return "Daily reminders sent."
-
-
-
+# Monthly report task
 @celery.task
 def send_monthly_report():
 
@@ -154,7 +154,9 @@ def send_monthly_report():
     return "Monthly report sent."
 
 
-#Exporting booking hsitory to CSV (User requested)
+# Exporting booking history to CSV (User requested)
+
+# Booking history export task
 @celery.task
 def export_booking_history(user_id):
 

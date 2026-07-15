@@ -1,11 +1,13 @@
 <template>
 
+<!-- Staff dashboard content -->
 <div class="container mt-5">
 
     <h2 class="mb-4">
         Staff Dashboard
     </h2>
 
+    <!-- Page actions -->
     <button
         class="btn btn-primary mb-3"
         @click="loadTreks"
@@ -20,6 +22,7 @@
         Logout
     </button>
 
+    <!-- Search section -->
     <div class="row mb-4">
 
         <div class="col-md-6">
@@ -43,6 +46,7 @@
         Assigned Treks
     </h3>
 
+    <!-- Assigned treks table -->
     <table class="table table-bordered table-striped">
 
         <thead>
@@ -111,6 +115,7 @@
 
     </table>
 
+    <!-- Edit trek section -->
     <h3
         v-if="editMode"
         class="mt-5 mb-4"
@@ -182,10 +187,12 @@
 
 <script setup>
 
+// Vue imports and API config
 import { ref, computed, onMounted } from "vue"
 import { useRouter } from "vue-router"
 import { API_URL } from "../config"
 
+// Router and trek state
 const router = useRouter()
 
 const treks = ref([])
@@ -200,6 +207,7 @@ const available_slots = ref("")
 
 const status = ref("")
 
+// Filter treks by search text
 const filteredTreks = computed(() => {
 
     if (!search.value.trim()) {
@@ -218,6 +226,7 @@ const filteredTreks = computed(() => {
 
 })
 
+// Load treks from API
 async function loadTreks() {
 
     const token = localStorage.getItem("token")
@@ -247,6 +256,7 @@ async function loadTreks() {
 
 }
 
+// Prepare trek for editing
 function editTrek(trek) {
 
     editMode.value = true
@@ -259,6 +269,7 @@ function editTrek(trek) {
 
 }
 
+// Update trek details to API
 async function updateTrek() {
 
     const token = localStorage.getItem("token")
@@ -312,12 +323,14 @@ async function updateTrek() {
 
 }
 
+// Navigate to trek participants page
 function viewParticipants(trekId) {
 
     router.push(`/staff/treks/${trekId}/participants`)
 
 }
 
+// Clear session and return to login
 function logout() {
 
     localStorage.clear()
@@ -326,6 +339,7 @@ function logout() {
 
 }
 
+// Load treks on page mount
 onMounted(() => {
 
     loadTreks()

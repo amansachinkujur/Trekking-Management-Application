@@ -6,6 +6,7 @@
         Admin Dashboard
     </h2>
 
+    <!-- Dashboard summary cards -->
     <div class="row mb-4">
 
         <div class="col-md-3 mb-3">
@@ -74,6 +75,7 @@
 
     </div>
 
+    <!-- Navigation actions -->
     <div class="d-grid gap-3">
 
         <button
@@ -125,6 +127,7 @@
 </template>
 <script setup>
 
+// Statistics state and loader
 import { ref, onMounted } from "vue"
 import { useRouter } from "vue-router"
 import { API_URL } from "../config"

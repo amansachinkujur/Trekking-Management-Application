@@ -1,5 +1,6 @@
 <template>
 
+<!-- Trek management page -->
 <div class="container mt-5">
 
     <h2 class="mb-4">Manage Treks</h2>
@@ -10,6 +11,8 @@
     >
         Refresh Treks
     </button>
+
+    <!-- Search treks -->
 
 <div class="row mt-4 mb-3">
 
@@ -29,7 +32,7 @@
     </div>
 
 </div>
-
+    <!-- Create or update trek -->
 
 <h3 class="mb-4">Create Trek</h3>
 
@@ -173,6 +176,8 @@
 >
     {{ editMode ? "Update Trek" : "Create Trek" }}
 </button>
+    <!-- Trek list table -->
+
     <table class="table table-bordered table-striped">
 
         <thead>
@@ -241,11 +246,11 @@
 
 <script setup>
 
+// Vue imports and API config
 import { ref, onMounted, computed } from "vue"
 import { API_URL } from "../config"
 
-
-
+// Form state and trek data
 const treks = ref([])
 const name = ref("")
 const location = ref("")
@@ -264,6 +269,8 @@ const editingTrekId = ref(null)
 
 
 const search = ref("")
+
+// Filter treks by search text
 const filteredTreks = computed(() => {
 
     if (!search.value.trim()) {
@@ -285,6 +292,7 @@ const filteredTreks = computed(() => {
 
 
 
+// Load treks from API
 async function loadTreks() {
 
     const token = localStorage.getItem("token")
@@ -313,6 +321,7 @@ async function loadTreks() {
 }
 
 
+// Load staff list for assignment
 async function loadStaff() {
 
     const token = localStorage.getItem("token")
@@ -339,6 +348,7 @@ async function loadStaff() {
 }
 
 
+// Validate trek form fields
 function validateTrek() {
 
     if (
@@ -361,6 +371,7 @@ function validateTrek() {
 
     if (start_date.value < today) {
 
+// Create new trek
         alert("Start date cannot be in the past.")
         return false
 
@@ -447,6 +458,7 @@ async function createTrek() {
 
 
 
+// Delete trek
 async function deleteTrek(id) {
 
     if (!confirm("Are you sure you want to delete this trek?")) {
@@ -487,6 +499,7 @@ async function deleteTrek(id) {
 }
 
 
+// Fill form for editing
 function editTrek(trek) {
 
     editMode.value = true
@@ -516,6 +529,7 @@ function editTrek(trek) {
 
 
 
+// Update existing trek
 async function updateTrek() {
     if (!validateTrek()) {
         return
@@ -591,6 +605,7 @@ async function updateTrek() {
 
 
 
+// Load initial data on page start
 onMounted(() => {
 
     loadTreks()

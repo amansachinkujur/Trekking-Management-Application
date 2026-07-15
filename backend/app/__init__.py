@@ -12,14 +12,16 @@ from flask_mail import Message
 
 
 
+# Extension setup
 db = SQLAlchemy()
 
 jwt = JWTManager()
 mail = Mail()
 cache = Cache()
 from app.models import User, Trek, Booking
-from app import cache
 
+
+# Application
 def create_app():
     
     app = Flask(__name__)
@@ -36,6 +38,7 @@ def create_app():
 
     cache.init_app(app)
     with app.app_context():
+        # Database 
         db.create_all()
         
         admin = User.query.filter_by(role="admin").first()
@@ -54,7 +57,7 @@ def create_app():
             db.session.add(admin)
             db.session.commit()
 
-    #Booking export route (user)
+    # Booking export route (user)
     
     @app.route("/bookings/export", methods=["POST"])
     @jwt_required()
@@ -76,10 +79,14 @@ def create_app():
 
 
 
+    # Public routes
     @app.route("/")
     def home():
+        #vuehomevueroute
+        
         return "Welcome to Trekking Management API"
 
+    # Authentication endpoints
     @app.route("/register", methods=["POST"])
     def register():
 
@@ -91,9 +98,9 @@ def create_app():
         phone = data.get("phone")
 
         # Check if any required field is missing
-        if not name or not email or not password:
+        if not name or not email or not password or not phone:
             return jsonify({
-                "message": "Name, email and password are required."
+                "message": "Name, email, password and phone are required."
             }), 400
 
         # Check if email already exists
@@ -153,6 +160,7 @@ def create_app():
             "name": user.name
         }), 200
     
+    # Profile endpoints
     @app.route("/profile", methods=["GET"])
     @jwt_required()
     def profile():
@@ -174,6 +182,7 @@ def create_app():
             "phone": user.phone
         }), 200
 
+    # Admin Trek management endpoints
     @app.route("/treks", methods=["POST"])
     @jwt_required()
     def create_trek():
@@ -274,32 +283,7 @@ def create_app():
 
         return jsonify(trek_list), 200
 
-    @app.route("/treks/<int:trek_id>", methods=["GET"])
-    @jwt_required()
-    def get_trek(trek_id):
-
-        trek = db.session.get(Trek, trek_id)
-
-        if not trek:
-            return jsonify({
-                "message": "Trek not found."
-            }), 404
-
-        return jsonify({
-            "id": trek.id,
-            "name": trek.name,
-            "location": trek.location,
-            "difficulty": trek.difficulty,
-            "duration": trek.duration,
-            "available_slots": trek.available_slots,
-            "assigned_staff_id": trek.assigned_staff_id,
-            "staff_name": trek.staff.name if trek.staff else None,
-            "status": trek.status,
-            "start_date": trek.start_date.strftime("%Y-%m-%d"),
-            "end_date": trek.end_date.strftime("%Y-%m-%d"),
-            "description": trek.description
-        }), 200
-
+ 
     @app.route("/treks/<int:trek_id>", methods=["PUT"])
     @jwt_required()
     def update_trek(trek_id):
@@ -389,6 +373,7 @@ def create_app():
         }), 200
 
 
+    # Booking endpoints
     @app.route("/bookings", methods=["POST"])
     @jwt_required()
     def book_trek():
@@ -481,6 +466,7 @@ def create_app():
 
 
 
+    # Staff management endpoints
     @app.route("/staff", methods=["POST"])
     @jwt_required()
     def create_staff():
@@ -560,7 +546,7 @@ def create_app():
         return jsonify(staff_list), 200
 
 
-    #Users list for admin
+    # User management endpoints
     @app.route("/admin/users", methods=["GET"])
     @jwt_required()
     def get_users():
@@ -591,7 +577,7 @@ def create_app():
 
         return jsonify(user_list), 200
 
-# Edit User (Admin)
+    # Edit User (Admin)
 
     @app.route("/admin/users/<int:user_id>", methods=["PUT"])
     @jwt_required()
@@ -656,6 +642,7 @@ def create_app():
 
 
 
+    # Trek staff assignment
     @app.route("/treks/<int:trek_id>/assign-staff", methods=["PUT"])
     @jwt_required()
     def assign_staff(trek_id):
@@ -709,7 +696,7 @@ def create_app():
             "message": "Staff assigned successfully."
         }), 200
 
-    #Staff Update Route
+    # Staff update and deletion
     @app.route("/staff/<int:staff_id>", methods=["PUT"])
     @jwt_required()
     def update_staff(staff_id):
@@ -765,7 +752,7 @@ def create_app():
             "message": "Staff updated successfully."
         }), 200
 
-    #Staff Delete Route
+    # Staff delete route
     @app.route("/staff/<int:staff_id>", methods=["DELETE"])
     @jwt_required()
     def delete_staff(staff_id):
@@ -806,6 +793,7 @@ def create_app():
 
 
 
+    # Booking cancellation
     @app.route("/bookings/<int:booking_id>/cancel", methods=["PUT"])
     @jwt_required()
     def cancel_booking(booking_id):
@@ -852,6 +840,7 @@ def create_app():
         }), 200
 
 
+    # Admin booking overview
     @app.route("/admin/bookings", methods=["GET"])
     @jwt_required()
     def admin_bookings():
@@ -883,14 +872,14 @@ def create_app():
 
         return jsonify(booking_list), 200
 
-#user treks api
+    # User trek feed
 
     @app.route("/user/treks", methods=["GET"])
     @cache.cached()
     @jwt_required()
     def get_user_treks():
         #test if cache data is shown or direct query from db
-        #print("Fetching treks from database...")
+        print("Fetching treks from database...")
         user_id = int(get_jwt_identity())
         user = db.session.get(User, user_id)
 
@@ -931,7 +920,7 @@ def create_app():
 
         return jsonify(trek_list), 200
 
-#User updating their profile
+    # User profile updates
     @app.route("/profile", methods=["PUT"])
     @jwt_required()
     def update_profile():
@@ -981,7 +970,7 @@ def create_app():
             "message": "Profile updated successfully."
         }), 200
 
-    #Staff assigned treks route
+    # Staff assigned treks
     @app.route("/staff/treks", methods=["GET"])
     @jwt_required()
     def get_staff_treks():
@@ -1016,16 +1005,17 @@ def create_app():
                 "available_slots": trek.available_slots,
                 "status": trek.status,
                 "start_date": trek.start_date.strftime("%Y-%m-%d"),
+                "end_date": trek.end_date.strftime("%Y-%m-%d"),
                 "registered_users": Booking.query.filter_by(
                                     trek_id=trek.id,
                                     status="Booked"
-                                    ).count(),
+                                    ).count()
 
             })
 
         return jsonify(trek_list), 200
 
-    #Staff Update assigned trek
+    # Staff assigned trek updates
     @app.route("/staff/treks/<int:trek_id>", methods=["PUT"])
     @jwt_required()
     def update_staff_trek(trek_id):
@@ -1077,7 +1067,7 @@ def create_app():
             "message": "Trek updated successfully."
         }), 200
 
-    #View Trek participants (Staff)
+    # Trek participants for staff
     @app.route("/staff/treks/<int:trek_id>/bookings", methods=["GET"])
     @jwt_required()
     def get_staff_trek_bookings(trek_id):
@@ -1128,7 +1118,7 @@ def create_app():
         return jsonify(booking_list), 200
 
 
-    #Admin Stats api(dashboard)
+    # Admin dashboard statistics
     @app.route("/admin/statistics", methods=["GET"])
     @jwt_required()
     def admin_statistics():

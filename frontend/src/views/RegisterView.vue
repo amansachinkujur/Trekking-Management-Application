@@ -1,4 +1,5 @@
 <template>
+    <!-- Registration page content -->
     <div class="container mt-5">
 
         <div class="row justify-content-center">
@@ -45,6 +46,7 @@
                         >
                     </div>
 
+                    <!-- Register action -->
                     <button
                         class="btn btn-success w-100"
                         @click="register"
@@ -69,10 +71,12 @@
 </template>
 
 <script setup>
+// Vue imports and API config
 import { ref } from "vue"
 import { useRouter } from "vue-router"
 import { API_URL } from "../config"
 
+// Router and form state
 const router = useRouter()
 
 const name = ref("")
@@ -80,6 +84,7 @@ const email = ref("")
 const phone = ref("")
 const password = ref("")
 
+// Submit registration data
 async function register() {
 
     const response = await fetch(`${API_URL}/register`, {

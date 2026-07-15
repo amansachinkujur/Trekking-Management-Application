@@ -1,5 +1,6 @@
 <template>
 
+<!-- User management page -->
 <div class="container mt-5">
 
     <h2 class="mb-4">
@@ -13,7 +14,7 @@
         Refresh Users
     </button>
 
-    <!-- Search -->
+    <!-- Search users -->
 
     <div class="row mb-4">
 
@@ -34,7 +35,7 @@
 
     </div>
 
-    <!-- Edit User -->
+    <!-- Edit user form -->
 
     <h3 class="mb-4">
         Edit User
@@ -42,7 +43,7 @@
 
     <div class="row">
 
-        <!-- Name -->
+        <!-- Name field -->
 
         <div class="col-md-6 mb-3">
 
@@ -58,7 +59,7 @@
 
         </div>
 
-        <!-- Email -->
+        <!-- Email field -->
 
         <div class="col-md-6 mb-3">
 
@@ -74,7 +75,7 @@
 
         </div>
 
-        <!-- Phone -->
+        <!-- Phone field -->
 
         <div class="col-md-6 mb-3">
 
@@ -90,7 +91,7 @@
 
         </div>
 
-        <!-- New Password -->
+        <!-- New password field -->
 
         <div class="col-md-6 mb-3">
 
@@ -107,7 +108,7 @@
 
         </div>
 
-        <!-- Status -->
+        <!-- Status field -->
 
         <div class="col-md-6 mb-3">
 
@@ -140,6 +141,8 @@
     >
         Update User
     </button>
+
+    <!-- User list table -->
 
     <table class="table table-bordered table-striped mt-4">
 
@@ -204,9 +207,11 @@
 
 <script setup>
 
+// Vue imports and API config
 import { ref, computed, onMounted } from "vue"
 import { API_URL } from "../config"
 
+// Form state and user data
 const users = ref([])
 
 const name = ref("")
@@ -219,6 +224,7 @@ const search = ref("")
 
 const editingUserId = ref(null)
 
+// Filter users by search text
 const filteredUsers = computed(() => {
 
     if (!search.value.trim()) {
@@ -239,6 +245,7 @@ const filteredUsers = computed(() => {
 
 })
 
+// Validate required user fields
 function validateUser() {
 
     if (
@@ -259,6 +266,7 @@ function validateUser() {
 
 }
 
+// Reset form values
 function clearForm() {
 
     name.value = ""
@@ -271,6 +279,7 @@ function clearForm() {
 
 }
 
+// Load users from API
 async function loadUsers() {
 
     const token = localStorage.getItem("token")
@@ -300,6 +309,7 @@ async function loadUsers() {
 
 }
 
+// Fill form for editing
 function editUser(user) {
 
     editingUserId.value = user.id
@@ -312,6 +322,7 @@ function editUser(user) {
 
 }
 
+// Update existing user
 async function updateUser() {
 
     if (!validateUser()) {
@@ -378,6 +389,7 @@ async function updateUser() {
 
 }
 
+// Load users on page start
 onMounted(() => {
 
     loadUsers()

@@ -1,11 +1,13 @@
 <template>
 
+<!-- Reports page content -->
 <div class="container mt-5">
 
     <h2 class="mb-4">
         Reports & Trekking Statistics
     </h2>
 
+    <!-- Page actions -->
     <button
         class="btn btn-primary mb-4"
         @click="loadStatistics"
@@ -20,6 +22,7 @@
         Back
     </button>
 
+    <!-- Statistics table -->
     <table class="table table-bordered table-striped">
 
         <tbody>
@@ -74,10 +77,12 @@
 
 <script setup>
 
+// Vue imports and API config
 import { ref, onMounted } from "vue"
 import { useRouter } from "vue-router"
 import { API_URL } from "../config"
 
+// Router and statistics state
 const router = useRouter()
 
 const stats = ref({
@@ -93,6 +98,7 @@ const stats = ref({
 
 })
 
+// Load statistics from API
 async function loadStatistics() {
 
     const token = localStorage.getItem("token")
@@ -122,6 +128,7 @@ async function loadStatistics() {
 
 }
 
+// Load statistics on page mount
 onMounted(() => {
 
     loadStatistics()

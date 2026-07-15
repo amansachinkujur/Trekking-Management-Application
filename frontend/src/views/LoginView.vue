@@ -1,6 +1,7 @@
 
 
 
+<!-- Login page UI -->
 <template>
     <div class="container mt-10">
 
@@ -72,6 +73,7 @@
     </div>
 </template>
 
+<!-- Login page logic -->
 <script setup>
 
 import { ref } from "vue"
@@ -85,6 +87,7 @@ const router = useRouter()
 const email = ref("")
 const password = ref("")
 
+// Handle login form submission
 async function login() {
 
     const response = await fetch(`${API_URL}/login`, {
@@ -108,10 +111,13 @@ async function login() {
 
     if (response.ok) {
 
+        // Store auth details locally
+
         localStorage.setItem("token", data.access_token)
         localStorage.setItem("role", data.role)
         localStorage.setItem("name", data.name)
 
+        // Redirect based on role
         if (data.role === "admin") {
             router.push("/admin")
         }

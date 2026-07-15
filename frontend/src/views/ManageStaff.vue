@@ -1,5 +1,6 @@
 <template>
 
+<!-- Staff management page -->
 <div class="container mt-5">
 
     <h2 class="mb-4">Manage Staff</h2>
@@ -11,7 +12,7 @@
         Refresh Staff
     </button>
 
-    <!-- Search -->
+    <!-- Search staff -->
 
     <div class="row mt-4 mb-3">
 
@@ -32,7 +33,7 @@
 
     </div>
 
-    <!-- Create / Update Staff -->
+    <!-- Create or update staff -->
 
     <h3 class="mb-4">
 
@@ -42,7 +43,7 @@
 
     <div class="row">
 
-        <!-- Name -->
+        <!-- Name field -->
 
         <div class="col-md-6 mb-3">
 
@@ -60,7 +61,7 @@
 
         </div>
 
-        <!-- Email -->
+        <!-- Email field -->
 
         <div class="col-md-6 mb-3">
 
@@ -78,7 +79,7 @@
 
         </div>
 
-        <!-- Phone -->
+        <!-- Phone field -->
 
         <div class="col-md-6 mb-3">
 
@@ -96,7 +97,7 @@
 
         </div>
 
-        <!-- Password -->
+        <!-- Password field -->
 
         <div class="col-md-6 mb-3">
 
@@ -115,7 +116,7 @@
 
         </div>
 
-        <!-- Active -->
+        <!-- Status field -->
 
         <div class="col-md-6 mb-3">
 
@@ -157,7 +158,7 @@
 
     </button>
 
-    <!-- Table -->
+    <!-- Staff list table -->
 
     <table class="table table-bordered table-striped mt-4">
 
@@ -233,9 +234,11 @@
 
 <script setup>
 
+// Vue imports and API config
 import { ref, computed, onMounted } from "vue"
 import { API_URL } from "../config"
 
+// Form state and staff data
 const staffList = ref([])
 
 const name = ref("")
@@ -249,6 +252,7 @@ const search = ref("")
 const editMode = ref(false)
 const editingStaffId = ref(null)
 
+// Filter staff by search text
 const filteredStaff = computed(() => {
 
     if (!search.value.trim()) {
@@ -268,6 +272,7 @@ const filteredStaff = computed(() => {
 
 })
 
+// Validate required fields
 function validateStaff() {
 
     if (
@@ -298,6 +303,7 @@ function validateStaff() {
 
 }
 
+// Load staff from API
 async function loadStaff() {
 
     const token = localStorage.getItem("token")
@@ -325,6 +331,7 @@ async function loadStaff() {
 
 }
 
+// Reset form values
 function clearForm() {
 
     name.value = ""
@@ -338,6 +345,7 @@ function clearForm() {
 
 }
 
+// Create new staff member
 async function createStaff() {
 
     if (!validateStaff()) {
@@ -390,6 +398,7 @@ async function createStaff() {
 
 }
 
+// Fill form for editing
 function editStaff(staff) {
 
     editMode.value = true
@@ -404,6 +413,7 @@ function editStaff(staff) {
 
 }
 
+// Update existing staff member
 async function updateStaff() {
 
     if (!validateStaff()) {
@@ -469,6 +479,7 @@ async function updateStaff() {
 
 }
 
+// Delete staff member
 async function deleteStaff(id) {
 
     if (!confirm("Are you sure you want to delete this staff member?")) {
@@ -514,6 +525,7 @@ async function deleteStaff(id) {
 
 }
 
+// Load staff on page start
 onMounted(() => {
 
     loadStaff()

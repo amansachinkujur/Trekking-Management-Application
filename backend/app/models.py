@@ -1,10 +1,11 @@
-# Creating models
+# Database models
 
 from app import db
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
 class User(db.Model):
+    # User account
     __tablename__ = "users"
 
     id = db.Column(db.Integer, primary_key=True)
@@ -33,6 +34,7 @@ class User(db.Model):
 
 
 class Trek(db.Model):
+    # Trek details
     __tablename__ = "treks"
 
     id = db.Column(db.Integer, primary_key=True)
@@ -70,6 +72,7 @@ class Trek(db.Model):
 
 
 class Booking(db.Model):
+    # Trek booking
     __tablename__ = "bookings"
 
     id = db.Column(db.Integer, primary_key=True)

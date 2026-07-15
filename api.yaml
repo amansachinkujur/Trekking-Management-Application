@@ -1,0 +1,151 @@
+openapi: 3.0.0
+
+info:
+  title: Trekking Management API
+  version: "1.0"
+  description: REST API for the Trekking Management Application built using Flask.
+
+servers:
+  - url: /
+
+paths:
+
+  /register:
+    post:
+      summary: Register a new user
+
+  /login:
+    post:
+      summary: Authenticate user and return JWT token
+
+  /profile:
+    get:
+      summary: Get logged-in user profile
+      security:
+        - bearerAuth: []
+
+    put:
+      summary: Update logged-in user profile
+      security:
+        - bearerAuth: []
+
+  /treks:
+    get:
+      summary: Get all treks
+      security:
+        - bearerAuth: []
+
+    post:
+      summary: Create a new trek (Admin)
+      security:
+        - bearerAuth: []
+
+  /treks/{trek_id}:
+    get:
+      summary: Get trek details
+      security:
+        - bearerAuth: []
+
+    put:
+      summary: Update trek (Admin)
+      security:
+        - bearerAuth: []
+
+    delete:
+      summary: Delete trek (Admin)
+      security:
+        - bearerAuth: []
+
+  /treks/{trek_id}/assign-staff:
+    put:
+      summary: Assign staff to a trek
+      security:
+        - bearerAuth: []
+
+  /staff:
+    get:
+      summary: Get all staff members
+      security:
+        - bearerAuth: []
+
+    post:
+      summary: Create a staff member
+      security:
+        - bearerAuth: []
+
+  /staff/{staff_id}:
+    put:
+      summary: Update staff details
+      security:
+        - bearerAuth: []
+
+    delete:
+      summary: Delete staff
+      security:
+        - bearerAuth: []
+
+  /staff/treks:
+    get:
+      summary: Get assigned treks for logged-in staff
+      security:
+        - bearerAuth: []
+
+  /staff/treks/{trek_id}:
+    put:
+      summary: Update assigned trek
+      security:
+        - bearerAuth: []
+
+  /staff/treks/{trek_id}/bookings:
+    get:
+      summary: View participants for assigned trek
+      security:
+        - bearerAuth: []
+
+  /bookings:
+    get:
+      summary: Get booking history
+      security:
+        - bearerAuth: []
+
+    post:
+      summary: Book a trek
+      security:
+        - bearerAuth: []
+
+  /bookings/{booking_id}/cancel:
+    put:
+      summary: Cancel a booking
+      security:
+        - bearerAuth: []
+
+  /bookings/export:
+    post:
+      summary: Export booking history as CSV (Celery Task)
+      security:
+        - bearerAuth: []
+
+  /admin/users:
+    get:
+      summary: Get all registered users
+      security:
+        - bearerAuth: []
+
+  /admin/statistics:
+    get:
+      summary: Get admin dashboard statistics
+      security:
+        - bearerAuth: []
+
+  /admin/bookings:
+    get:
+      summary: Get all bookings
+      security:
+        - bearerAuth: []
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

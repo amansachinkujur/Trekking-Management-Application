@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router"
-
+import HomeView from "../views/HomeView.vue"
 import LoginView from "../views/LoginView.vue"
 import RegisterView from "../views/RegisterView.vue"
 import AdminDashboard from "../views/AdminDashboard.vue"
@@ -16,10 +16,12 @@ import Reports from "../views/Reports.vue"
 
 
 
+
+// Route definitions
 const routes = [
     {
         path: "/",
-        redirect: "/login"
+        component: HomeView
     },
     {
         path: "/login",
@@ -82,6 +84,8 @@ const routes = [
 
 ]
 
+
+// Router setup
 const router = createRouter({
     history: createWebHistory(),
     routes

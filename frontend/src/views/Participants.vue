@@ -1,10 +1,13 @@
 <template>
 
+<!-- Trek participants page -->
 <div class="container mt-5">
 
     <h2 class="mb-4">
         Trek Participants
     </h2>
+
+    <!-- Refresh participants list -->
 
     <button
         class="btn btn-primary mb-3"
@@ -13,12 +16,16 @@
         Refresh
     </button>
 
+    <!-- Go back to previous page -->
+
     <button
         class="btn btn-secondary mb-3 ms-2"
         @click="router.back()"
     >
         Back
     </button>
+
+    <!-- Participants table -->
 
     <table class="table table-bordered table-striped">
 
@@ -73,16 +80,20 @@
 
 <script setup>
 
+// Vue imports, router, and API config
 import { ref, onMounted } from "vue"
 import { useRoute, useRouter } from "vue-router"
 import { API_URL } from "../config"
 
+// Current route and router
 const route = useRoute()
 
 const router = useRouter()
 
+// Participants data
 const participants = ref([])
 
+// Load participants from API
 async function loadParticipants() {
 
     const token = localStorage.getItem("token")
@@ -118,6 +129,7 @@ async function loadParticipants() {
 
 }
 
+// Load participants on page start
 onMounted(() => {
 
     loadParticipants()

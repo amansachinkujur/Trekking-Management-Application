@@ -1,5 +1,6 @@
 <template>
 
+<!-- Profile page content -->
 <div class="container mt-5">
 
     <h2 class="mb-4">
@@ -75,6 +76,7 @@
 
     </div>
 
+    <!-- Profile actions -->
     <button
         class="btn btn-success"
         @click="updateProfile"
@@ -89,14 +91,17 @@
 
 <script setup>
 
+// Vue imports and API config
 import { ref, onMounted } from "vue"
 import { API_URL } from "../config"
 
+// Profile form state
 const name = ref("")
 const email = ref("")
 const phone = ref("")
 const password = ref("")
 
+// Load profile from API
 async function loadProfile() {
 
     const token = localStorage.getItem("token")
@@ -128,6 +133,7 @@ async function loadProfile() {
 
 }
 
+// Update profile to API
 async function updateProfile() {
 
     if (
@@ -195,6 +201,7 @@ async function updateProfile() {
 
 }
 
+// Load profile on page mount
 onMounted(() => {
 
     loadProfile()

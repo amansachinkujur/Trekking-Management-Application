@@ -23,7 +23,7 @@
 
             <input
                 class="form-control"
-                placeholder="Search by user or trek"
+                placeholder="Search by user name or email or trek"
                 v-model="search"
             >
 
